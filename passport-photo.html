@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Title & Meta Description for SEO -->
+  <title>Passport Size Photo Maker Online Free | XMan Passport Photo Generator</title>
+  <meta name="description" content="Passport size photo maker online free. Create professional passport photos instantly. Online passport size photo maker with background remover, photo size ratio, and free download. Supports Indian passport size photo maker online free and more.">
+
+  <!-- SEO Keywords -->
+  <meta name="keywords" content="Passport size photo maker online free, Online passport size photo maker, Passport size photo size, Passport photo Maker free download, Indian passport size photo maker online free, Passport size photo ratio, Cutout pro passport photo maker online passport size maker tool">
+
+  <!-- Open Graph for Social Media -->
+  <meta property="og:title" content="Passport Size Photo Maker Online Free | XMan Tool" />
+  <meta property="og:description" content="Free online passport photo maker with background remover and passport size ratio. Download single or A4 sheet instantly." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com" />
+  <meta property="og:image" content="https://yourdomain.com/assets/images/passport-preview.png" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourdomain.com" />
+
+  <!-- TensorFlow.js + BodyPix -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2"></script>
+
+  <style>
+    :root {
+      --primary: #ff5722;
+      --bg: #f4f4f6;
+      --surface: #ffffff;
+      --text: #2c3e50;
+      --muted: #8b98a5;
+      --radius: 1rem;
+      --shadow: 0 .25rem .75rem rgba(0,0,0,.08);
+    }
+    body { margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:16px; }
+
+    /* Navbar */
+    header.navbar{position:sticky;top:0;z-index:1000;background:var(--surface);box-shadow:var(--shadow)}
+    .nav-wrap{max-width:75rem;margin:0 auto;padding:1rem;display:flex;align-items:center;justify-content:space-between}
+    .nav-left{display:flex;align-items:center;gap:.75rem}
+    .hamburger{width:2.25rem;height:2.25rem;border:none;background:transparent;color:var(--primary);cursor:pointer}
+    .logo-holder{width:2rem;height:2rem;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center}
+    .brand{font-weight:800;color:var(--primary);font-size:1.25rem}
+
+    aside.sidebar{position:fixed;inset:0 auto 0 0;width:16rem;max-width:85vw;background:var(--surface);box-shadow:var(--shadow);transform:translateX(-100%);transition:transform .25s ease;padding:1.5rem 1rem;z-index:1100}
+    aside.sidebar.open{transform:none}
+
+    main{max-width:75rem;margin:0 auto;padding:1.5rem;display:grid;gap:1.5rem}
+    .card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.5rem}
+    .actions{display:flex;flex-wrap:wrap;gap:.75rem}
+    .btn{padding:.7rem 1.2rem;border:none;border-radius:1rem;font-weight:700;cursor:pointer}
+    .btn.primary{background:var(--primary);color:#fff}
+    .btn.soft{background:#eceff3}
+    .preview{border:2px dashed #e7e7ea;border-radius:var(--radius);min-height:12rem;display:grid;place-items:center;padding:1.5rem;background:#fff}
+    .progress{display:none;width:100%;height:.6rem;background:#eceff3;border-radius:999px;overflow:hidden}
+    .progress .bar{height:100%;width:0;background:var(--primary);transition:width .25s}
+    .ad-banner{width:100%;height:90px;background:#ddd;display:flex;align-items:center;justify-content:center;color:#666;font-size:.9rem;border-radius:var(--radius)}
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;align-items:center;justify-content:center}
+    .modal-content{background:#fff;padding:2rem;border-radius:var(--radius);text-align:center;max-width:22rem;box-shadow:var(--shadow)}
+    .option-group{margin-top:1rem;display:flex;align-items:center;gap:1rem}
+    label{font-weight:600}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-wrap">
+      <div class="nav-left">
+        <button id="hamburger" class="hamburger">☰</button>
+        <div class="logo-holder"><span style="color:var(--primary);font-weight:800">X</span></div>
+        <div class="brand">XMan Passport</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar">
+    <h2>Menu</h2>
+    <nav><a href="#">My Photos</a></nav>
+  </aside>
+
+  <main>
+    <!-- Upload -->
+    <section class="card">
+      <h1>Online Passport Size Photo Maker Free</h1>
+      <p>Create passport photos with transparent background remover, background color selector, and instant download.</p>
+
+      <div class="actions">
+        <button id="uploadBtn" class="btn primary">Upload Photo</button>
+        <input id="fileInput" type="file" accept="image/*" hidden>
+        <button id="processBtn" class="btn primary" disabled>Process</button>
+      </div>
+
+      <!-- Background color selector -->
+      <div class="option-group">
+        <label for="bgColor">Background:</label>
+        <input id="bgColor" type="color" value="#ffffff">
+      </div>
+
+      <div class="progress"><div id="progressBar" class="bar"></div></div>
+    </section>
+
+    <!-- Banner Ad -->
+    <div class="ad-banner">AdMob Banner [#AdmobId]</div>
+
+    <!-- Single Preview -->
+    <section class="card">
+      <h2>Single Passport Photo Preview</h2>
+      <div id="singlePreview" class="preview">No image</div>
+      <div style="margin-top:1rem">
+        <button id="downloadSingleBtn" class="btn soft" disabled>Download Single</button>
+      </div>
+    </section>
+
+    <!-- Banner Ad -->
+    <div class="ad-banner">AdMob Banner [#AdmobId]</div>
+
+    <!-- A4 Sheet -->
+    <section class="card">
+      <h2>A4 Sheet (16 Passport Photos)</h2>
+      <div id="a4Preview" class="preview">No sheet</div>
+      <div style="margin-top:1rem">
+        <button id="downloadSheetBtn" class="btn soft" disabled>Download A4 Sheet</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Video Ad Modal -->
+  <div id="videoAdModal" class="modal">
+    <div class="modal-content">
+      <h3>Sponsored Video</h3>
+      <p>Ad is playing... please wait</p>
+      <p id="adCountdown">5</p>
+      <button id="closeAdBtn" class="btn primary" disabled>Continue</button>
+    </div>
+  </div>
+
+  <footer style="text-align:center;padding:1rem;color:var(--muted)">
+    © <span id="year"></span> XMan – Passport Photo Generator
+  </footer>
+
+  <script>
+    const $=id=>document.getElementById(id);
+    let bpNet,originalImage,bgRemovedImage,processedImage;
+    const progress=document.querySelector(".progress"),bar=$("progressBar");
+
+    $("hamburger").onclick=()=>{$("sidebar").classList.toggle("open")};
+    document.addEventListener("click",e=>{
+      if(!$("sidebar").contains(e.target)&&!$("hamburger").contains(e.target)){
+        $("sidebar").classList.remove("open");
+      }
+    });
+
+    function showProgress(){progress.style.display="block"}
+    function hideProgress(){setTimeout(()=>{progress.style.display="none";bar.style.width="0"},400)}
+    function setProgress(v){bar.style.width=v+"%"}
+
+    async function ensureModel(){ if(bpNet) return bpNet; await tf.setBackend("webgl"); bpNet=await bodyPix.load(); return bpNet; }
+
+    async function removeBackgroundAI(img){
+      await ensureModel();
+      const cvs=document.createElement("canvas");
+      cvs.width=img.width; cvs.height=img.height;
+      const ctx=cvs.getContext("2d"); ctx.drawImage(img,0,0);
+      const seg=await bpNet.segmentPerson(cvs,{internalResolution:"medium",segmentationThreshold:.7});
+      const frame=ctx.getImageData(0,0,cvs.width,cvs.height);
+      for(let i=0;i<frame.data.length;i+=4){ if(seg.data[i/4]===0) frame.data[i+3]=0; }
+      ctx.putImageData(frame,0,0);
+      const out=new Image(); out.src=cvs.toDataURL("image/png");
+      await new Promise(r=>out.onload=r);
+      return out;
+    }
+
+    function applyBackgroundColor(img,color){
+      const cvs=document.createElement("canvas");
+      cvs.width=img.width;cvs.height=img.height;
+      const ctx=cvs.getContext("2d");
+      ctx.fillStyle=color;ctx.fillRect(0,0,cvs.width,cvs.height);
+      ctx.drawImage(img,0,0);
+      const out=new Image(); out.src=cvs.toDataURL("image/png");
+      return out;
+    }
+
+    function resizeImage(img,w=35,h=45,u="mm"){
+      const toPx=(v,u)=>u==="mm"?Math.round((v/10)*37.8):(u==="inch"?v*96:v);
+      const W=toPx(w,u),H=toPx(h,u);
+      const cvs=document.createElement("canvas");
+      cvs.width=W;cvs.height=H;
+      cvs.getContext("2d").drawImage(img,0,0,W,H);
+      const out=new Image(); out.src=cvs.toDataURL("image/png");
+      return out;
+    }
+
+    function generateA4(img){
+      const a4W=794,a4H=1123,gap=10,cols=4,rows=4;
+      const cellW=(a4W-(cols+1)*gap)/cols, cellH=(a4H-(rows+1)*gap)/rows;
+      const cvs=document.createElement("canvas");
+      cvs.width=a4W;cvs.height=a4H;
+      const ctx=cvs.getContext("2d");
+      ctx.fillStyle="#fff";ctx.fillRect(0,0,a4W,a4H);
+      for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){
+        ctx.drawImage(img,gap+c*(cellW+gap),gap+r*(cellH+gap),cellW,cellH);
+      }}
+      return cvs.toDataURL("image/png");
+    }
+
+    function updatePreviews(img){
+      $("singlePreview").innerHTML="";
+      $("singlePreview").appendChild(img.cloneNode());
+      $("a4Preview").innerHTML="";
+      const sheet=new Image(); sheet.src=generateA4(img);
+      $("a4Preview").appendChild(sheet);
+      $("downloadSingleBtn").disabled=false; $("downloadSheetBtn").disabled=false;
+    }
+
+    async function handleUpload(file){
+      if(!file) return;
+      const reader=new FileReader();
+      reader.onload=e=>{
+        const img=new Image();
+        img.onload=async()=>{
+          originalImage=img;
+          showProgress(); setProgress(30);
+          bgRemovedImage=await removeBackgroundAI(img);
+          $("singlePreview").innerHTML="";
+          $("singlePreview").appendChild(bgRemovedImage.cloneNode());
+          $("processBtn").disabled=false;
+          setProgress(100); hideProgress();
+        };
+        img.src=e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function processPhoto(){
+      if(!bgRemovedImage)return;
+      showProgress(); setProgress(50);
+      const color=$("bgColor").value;
+      processedImage=resizeImage(applyBackgroundColor(bgRemovedImage,color));
+      updatePreviews(processedImage);
+      setProgress(100); hideProgress();
+    }
+
+    $("uploadBtn").onclick=()=>$("fileInput").click();
+    $("fileInput").onchange=e=>handleUpload(e.target.files[0]);
+    $("processBtn").onclick=processPhoto;
+
+    // --- Ad Logic ---
+    function showVideoAd(callback){
+      const modal=$("videoAdModal"),btn=$("closeAdBtn"),countdown=$("adCountdown");
+      let sec=5;modal.style.display="flex";btn.disabled=true;countdown.textContent=sec;
+      const timer=setInterval(()=>{sec--;countdown.textContent=sec;if(sec<=0){clearInterval(timer);btn.disabled=false;}},1000);
+      btn.onclick=()=>{modal.style.display="none";callback();};
+    }
+
+    $("downloadSingleBtn").onclick=()=>{if(!processedImage)return;showVideoAd(()=>{const a=document.createElement("a");a.download="passport-photo.png";a.href=processedImage.src;a.click();});};
+    $("downloadSheetBtn").onclick=()=>{if(!processedImage)return;showVideoAd(()=>{const a=document.createElement("a");a.download="passport-photos-sheet.png";a.href=generateA4(processedImage);a.click();});};
+
+    $("year").textContent=new Date().getFullYear();
+  </script>
+</body>
+</html>
